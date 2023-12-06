@@ -5,7 +5,6 @@ Population size: 125
 Number of elites: 10
 Probability of crossover: 95.0%
 Probability of mutation: 10.0%
-Comment: official run mutation 0.2
 +---------------+------------+---------------+--------------------+--------------------+-----------+-----------------+--------------------+------------------+----------------+
 | Function Name | Min or Max | Optimal Value |    Best Fitness    |     Avg Error      | Std Error | Avg Generations |  Avg Best Fitness  | Std Best Fitness | Avg Total Time |
 +---------------+------------+---------------+--------------------+--------------------+-----------+-----------------+--------------------+------------------+----------------+
