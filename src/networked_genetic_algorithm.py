@@ -55,10 +55,6 @@ class NetworkGeneticAlgorithm(GeneticAlgorithm, NetworkAssignment, NetworkModel,
             # Create a copy of the network
             new_network = self.network.copy()
 
-            if generation % 1000 == 0:
-                self.draw_manager.centrality_histogram(
-                    new_network, generation)
-
             history._add_network(new_network)
 
             fitnesses = self._evaluate_population(

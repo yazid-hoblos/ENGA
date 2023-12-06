@@ -16,7 +16,7 @@ from utils.drawable import DrawManager
 import infomap
 
 
-class YNGA(GeneticAlgorithm, NetworkAssignment, NetworkModel, NetworkSelection):
+class CRGA(GeneticAlgorithm, NetworkAssignment, NetworkModel, NetworkSelection):
     def __init__(self, number_of_genes: int, domain, number_of_generations: int, population_size: int, number_elites: int,
                  probability_crossover: float, probability_mutation: float, decimal_precision: int, create_random_individual, fitness_function,
                  is_maximization: bool, verbose: bool = True, random_seed: int = None):
@@ -24,15 +24,6 @@ class YNGA(GeneticAlgorithm, NetworkAssignment, NetworkModel, NetworkSelection):
         super().__init__(number_of_genes, domain, number_of_generations, population_size, number_elites, probability_crossover, probability_mutation, decimal_precision,
                          create_random_individual, fitness_function, is_maximization, verbose, random_seed)
 
-        # NetworkModel.__init__(
-        #     self, NetworkModelType.BARABASI_ALBERT, population_size)
-        # NetworkAssignment.__init__(
-        #     self, NetworkAssignmentType.DEGREE_CENTRALITY_FITNESS_ASSIGNMENT)
-        # NetworkSelection.__init__(self, initial_selection_type=InitialSelectionType.TOURNAMENT,
-        #                           secondary_selection_type=SecondarySelectionType.RANDOM_NEIGHBOR)
-
-        # Adds the node object to each node, i.e. self.network.nodes[index]['node']
-        # self._assign_individuals_to_nodes()
         self.draw_manager = DrawManager(self.is_maximization)
 
     # Override the default selection method of GA
@@ -98,12 +89,6 @@ class YNGA(GeneticAlgorithm, NetworkAssignment, NetworkModel, NetworkSelection):
             for node in most_fit_nodes:
                 if node != i:
                     network.add_edge(i, node)
-
-        # threshold = 0.7
-        # for i in range(self.popsize):
-        #     for j in range(self.popsize):
-        #         if i != j and similarity_matrix[i][j] > threshold:
-        #             network.add_edge(i, j)
 
         return network
 
@@ -203,8 +188,7 @@ class YNGA(GeneticAlgorithm, NetworkAssignment, NetworkModel, NetworkSelection):
             for node in self.network.nodes:
                 representativity[node] = local_importance[node][self.network.nodes[node]
                                                                 ['community']] * importance_concentration[node]
-            print(
-                f"Number of nodes in each community: {[len(communities[community]) for community in communities]}")
+
             # from each community compute its fitness
             community_fitness = {}
             for community in communities:
@@ -212,9 +196,6 @@ class YNGA(GeneticAlgorithm, NetworkAssignment, NetworkModel, NetworkSelection):
                 for node in communities[community]:
                     community_fitness[community] += self.network.nodes[node]['node'].fitness
                 community_fitness[community] /= len(communities[community])
-
-            print(
-                f"Fitness of each community: {[community_fitness[community] for community in communities]}")
 
             take_nodes = self.popsize // 2
 
@@ -234,17 +215,11 @@ class YNGA(GeneticAlgorithm, NetworkAssignment, NetworkModel, NetworkSelection):
                 normalized_community_fitness = {community: normalized_community_fitness[community] /
                                                 sum(normalized_community_fitness.values()) for community in communities}
 
-            print(
-                f"Normalized fitness of each community: {[normalized_community_fitness[community] for community in communities]} = {sum(normalized_community_fitness.values())}")
-
             selected_nodes_per_community = np.random.multinomial(
                 take_nodes, list(normalized_community_fitness.values()))
 
             selected_nodes_per_community = {
                 community: selected_nodes_per_community[i] for i, community in enumerate(communities)}
-
-            print(
-                f"select_nodes_per_community: {selected_nodes_per_community} = {sum(selected_nodes_per_community.values())}")
 
             # fix the select_nodes_per_community if there are less nodes in a community than required, distribute the excess nodes equally to all communities
             while any([selected_nodes_per_community[community] > len(communities[community]) for community in communities]):
@@ -277,9 +252,6 @@ class YNGA(GeneticAlgorithm, NetworkAssignment, NetworkModel, NetworkSelection):
                         selected_nodes_per_community[community] = len(
                             communities[community])
 
-            print(
-                f"selected_nodes_per_community: {selected_nodes_per_community} = {sum(selected_nodes_per_community.values())}")
-
             chosen_nodes = []
             for community in communities:
                 representativity_in_community = {
@@ -293,9 +265,6 @@ class YNGA(GeneticAlgorithm, NetworkAssignment, NetworkModel, NetworkSelection):
 
             chosen_individuals = [
                 (node, self.network.nodes[node]['node'].individual) for node in chosen_nodes]
-
-            print(
-                f"chosen_individuals = {len(chosen_individuals)}")
 
             # use strict mating on the chosen nodes
             new_population = []
@@ -324,45 +293,14 @@ class YNGA(GeneticAlgorithm, NetworkAssignment, NetworkModel, NetworkSelection):
                 new_population.append(child2)
 
             pick_from = new_population + [ind for _, ind in chosen_individuals]
-            print(f"Size of pick_from: {len(pick_from)}")
 
             if len(pick_from) > self.popsize:
-                print(f"removing {len(pick_from) - self.popsize} individuals")
                 fitnesses = self._evaluate_population(pick_from)
-                print(f"fitnesses: {len(fitnesses)}")
                 ind_fitnesses = np.argsort(fitnesses)
                 ind_fitnesses = ind_fitnesses[:self.popsize]
                 pick_from = [pick_from[i] for i in ind_fitnesses]
 
-            print(f"Size of pick_from: {len(pick_from)}")
             self.population = pick_from
-
-            # if generation % 10 == 0:
-            #     largest_communities = sorted(
-            #         communities.values(), key=lambda x: len(x), reverse=True)
-            #     colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink',
-            #               'brown', 'black', 'gray', 'cyan', 'magenta', 'lime', 'olive', 'teal']
-            #     node_colors = {}
-            #     for i, nodes in enumerate(largest_communities):
-            #         for node in nodes:
-            #             node_colors[node] = colors[i % len(colors)]
-            #     default_node_color = 'black'
-            #     for node in self.network.nodes:
-            #         if node not in node_colors:
-            #             node_colors[node] = default_node_color
-
-            #     # top 10 representativity have highest size
-            #     node_sizes = {}
-            #     for node in self.network.nodes:
-            #         if node in representativity:
-            #             node_sizes[node] = representativity[node] * 1000
-            #         else:
-            #             node_sizes[node] = 100
-
-            #     nx.draw(self.network, pos=nx.kamada_kawai_layout(
-            #         self.network), node_color=[node_colors[node] for node in self.network.nodes], node_size=[node_sizes[node] for node in self.network.nodes])
-            #     plt.show()
-
             history._add_population_fitness(fitnesses, self.population)
 
         history.stop()
