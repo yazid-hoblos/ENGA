@@ -311,7 +311,8 @@ class DrawManager:
     def draw_animated_network(self, history):
         networks = history.get_networks()
 
-        fig, ax = plt.subplots()
+        fig = plt.figure(figsize=(16, 12))
+        ax = plt.gca()
 
         pos = nx.spring_layout(networks[0], k=1.4)
 
@@ -371,6 +372,8 @@ class DrawManager:
                                       interval=100, repeat=True)
 
         plt.show()
+        # ani.save('dynamic_images.gif', writer='pillow',
+        #          fps=40, dpi=100, bitrate=1000)
 
     def temprature_of_node(self, G: nx.Graph, node):
         """
