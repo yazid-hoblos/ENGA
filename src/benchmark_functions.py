@@ -97,21 +97,6 @@ f8: GABenchmarkFunction = GABenchmarkFunction(
     function_characteristics=[FunctionCharacteristic.MULTIMODAL, FunctionCharacteristic.NON_SEPARETABLE, FunctionCharacteristic.NON_SYMMETRIC, FunctionCharacteristic.PERMUTATION_VARIANT])
 
 
-def get_all_paper_functions():
-    functions: List[GABenchmarkFunction] = []
-
-    functions.append(f1)
-    functions.append(f2)
-    functions.append(f3)
-    functions.append(f4)
-    functions.append(f5)
-    functions.append(f6)
-    functions.append(f7)
-    functions.append(f8)
-
-    return functions
-
-
 def get_all_functions():
     functions: List[GABenchmarkFunction] = []
 

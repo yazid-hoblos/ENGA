@@ -6,7 +6,7 @@ from genetic_algorithm import GeneticAlgorithm, GAHistory
 from enhanced_networked_genetic_algorithm import EnhancedNetworkGeneticAlgorithm
 from networked_genetic_algorithm import NetworkGeneticAlgorithm
 from benchmark import Benchmark, GABenchmarkFunction, FunctionCharacteristic
-from benchmark_functions import get_functions_by_name, get_functions_with_characteristics
+from benchmark_functions import get_functions_by_name, get_functions_with_characteristics, get_all_functions
 import sys
 import math
 from CRGA import CRGA
@@ -17,7 +17,7 @@ sys.path.append('.')
 
 
 def main():
-    benchmark_functions = get_functions_by_name(['f2'])
+    benchmark_functions = get_all_functions()
 
     # Enhanced Networked Genetic Algorithm
     enhanced_nga_benchmark = Benchmark(genetic_algorithm=EnhancedNetworkGeneticAlgorithm, number_of_runs=1, benchmark_functions=benchmark_functions,
