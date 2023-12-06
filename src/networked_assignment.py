@@ -124,25 +124,7 @@ class NetworkAssignment:
         raise NotImplementedError
 
     def _eigenvector_centrality_fitness_assignment(self):
-        fitnesses = list(self._evaluate_population(self.population))
-        eigenvector_centralities = list(
-            nx.eigenvector_centrality(self.network).values())
-
-        fitnesses = np.array(fitnesses)
-        eigenvector_centralities = np.array(eigenvector_centralities)
-
-        fitnesses_argsort = np.argsort(fitnesses)
-        eigenvector_centralities_argsort = np.argsort(
-            eigenvector_centralities)[::-1]
-
-        if self.is_maximization:
-            fitnesses_argsort = fitnesses_argsort[::-1]
-
-        for n_x, i_x in zip(eigenvector_centralities_argsort, fitnesses_argsort):
-            node = Node(
-                n_x, self.population[i_x], self._evaluate(self.population[i_x]))
-
-            self.network.nodes[n_x]['node'] = node
+        raise NotImplementedError
 
     def _closest_centrality_fitness_assignment(self):
         raise NotImplementedError

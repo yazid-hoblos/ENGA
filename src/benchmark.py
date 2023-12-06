@@ -69,17 +69,6 @@ class Benchmark:
                 history = genetic_algorithm_instance.run()
                 list_history.append(history)
                 if self.save_metrics:
-                    # Network Specific Metrics i.e. the functions itself will check if the history have the networks data
-                    self.draw_manager.draw_avg_path_length(
-                        history, name=f"avg_path_length_{self.genetic_algorithm.__name__}_{benchmark_function.name}_run_{_}")
-                    self.draw_manager.draw_avg_clustering_coefficient(
-                        history, name=f"avg_clustering_coefficient_{self.genetic_algorithm.__name__}_{benchmark_function.name}_run_{_}")
-                    self.draw_manager.draw_avg_degree(
-                        history, name=f"avg_degree_{self.genetic_algorithm.__name__}_{benchmark_function.name}_run_{_}")
-                    self.draw_manager.draw_degree_exponent(
-                        history, name=f"degree_exponent_{self.genetic_algorithm.__name__}_{benchmark_function.name}_run_{_}")
-                    self.draw_manager.draw_number_of_nodes_to_remove(
-                        history, name=f"number_of_nodes_to_remove_{self.genetic_algorithm.__name__}_{benchmark_function.name}_run_{_}")
 
                     self.draw_manager.draw_selection_pressure(
                         history, name=f"selection_pressure_{self.genetic_algorithm.__name__}_{benchmark_function.name}_run_{_}")

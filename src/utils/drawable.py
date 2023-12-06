@@ -543,7 +543,7 @@ class DrawManager:
         if plt_show:
             plt.show()
 
-    def centrality_histogram(self, G: nx.Graph, func=nx.degree_centrality, plt_show=True, save=False, name=""):
+    def centrality_histogram(self, G: nx.Graph, generation, func=nx.degree_centrality, plt_show=True, save=False, name=""):
         """
         Draw the eigenvector centrality histogram of a graph
         """
@@ -553,9 +553,9 @@ class DrawManager:
         plt.hist(centrality_sequence, bins=20, edgecolor='black', alpha=0.7)
 
         # You can customize labels and titles if needed
-        plt.xlabel(f'{func.__name__} Centrality Value')
+        plt.xlabel("Degree")
         plt.ylabel('Frequency')
-        plt.title(f'{func.__name__} Centrality Distribution Histogram')
+        plt.title(f'Degree Distribution on Generation {generation}')
 
         plt.grid(True)
         if plt_show:
@@ -570,10 +570,11 @@ class DrawManager:
             plt.savefig(filename)
 
         # plot loglog
-        plt.loglog(centrality_sequence, 'o')
-        plt.ylabel(f'{func.__name__} Centrality Value')
-        plt.xlabel('Node')
-        plt.title(f'{func.__name__} Centrality Distribution LogLog Plot')
-        plt.grid(True)
+        plt.loglog(centrality_sequence, 'b-', marker='o',
+                   linestyle='None', markersize=3)
+        plt.ylabel(f'Frequency')
+        plt.xlabel('Degree')
+        plt.title(
+            f'LogLog Degree Distribution on Generation {generation}')
         if plt_show:
             plt.show()
