@@ -1,0 +1,13 @@
+Benchmark for EnhancedNetworkGeneticAlgorithm
+Number of runs: 3
+Number of generations: 2000
+Population size: 125
+Number of elites: 5
+Probability of crossover: 95.0%
+Probability of mutation: 10.0%
+comment:  add child if better than parent but parent is elite  + remove nodes based on low degreee and high fitness (m=2) 
++---------------+------------+---------------+-------------------+-------------------+-------------------+-----------------+------------------+-------------------+----------------+
+| Function Name | Min or Max | Optimal Value |    Best Fitness   |     Avg Error     |     Std Error     | Avg Generations | Avg Best Fitness |  Std Best Fitness | Avg Total Time |
++---------------+------------+---------------+-------------------+-------------------+-------------------+-----------------+------------------+-------------------+----------------+
+|      tsp      |    Min     |      7542     | 9319.477337090295 | 2142.399038508091 | 277.4780866095065 |      2000.0     | 9684.39903850809 | 277.4780866095064 | 43.87 seconds  |
++---------------+------------+---------------+-------------------+-------------------+-------------------+-----------------+------------------+-------------------+----------------+

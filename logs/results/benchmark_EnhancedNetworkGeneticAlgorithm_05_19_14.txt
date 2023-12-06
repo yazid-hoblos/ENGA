@@ -1,0 +1,13 @@
+Benchmark for EnhancedNetworkGeneticAlgorithm
+Number of runs: 3
+Number of generations: 2000
+Population size: 125
+Number of elites: 2
+Probability of crossover: 95.0%
+Probability of mutation: 10.0%
+comment: weight for fitness is higher (1) than for degree
++---------------+------------+---------------+-------------------+--------------------+--------------------+-----------------+-------------------+--------------------+----------------+
+| Function Name | Min or Max | Optimal Value |    Best Fitness   |     Avg Error      |     Std Error      | Avg Generations |  Avg Best Fitness |  Std Best Fitness  | Avg Total Time |
++---------------+------------+---------------+-------------------+--------------------+--------------------+-----------------+-------------------+--------------------+----------------+
+|      tsp      |    Min     |      7542     | 9325.620075504874 | 1936.8046350187426 | 113.04618341486028 |      2000.0     | 9478.804635018743 | 113.04618341486028 | 44.10 seconds  |
++---------------+------------+---------------+-------------------+--------------------+--------------------+-----------------+-------------------+--------------------+----------------+

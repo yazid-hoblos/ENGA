@@ -1,0 +1,13 @@
+Benchmark for EnhancedNetworkGeneticAlgorithm
+Number of runs: 1
+Number of generations: 2000
+Population size: 125
+Number of elites: 0
+Probability of crossover: 95.0%
+Probability of mutation: 50.0%
+Comment: closing enga page
++---------------+------------+---------------+--------------+-----------+-----------+-----------------+------------------+------------------+----------------+
+| Function Name | Min or Max | Optimal Value | Best Fitness | Avg Error | Std Error | Avg Generations | Avg Best Fitness | Std Best Fitness | Avg Total Time |
++---------------+------------+---------------+--------------+-----------+-----------+-----------------+------------------+------------------+----------------+
+|       f5      |    Min     |       0       |     0.0      |    0.0    |    0.0    |      1433.0     |       0.0        |       0.0        | 25.01 seconds  |
++---------------+------------+---------------+--------------+-----------+-----------+-----------------+------------------+------------------+----------------+
