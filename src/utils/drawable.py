@@ -79,19 +79,23 @@ class DrawManager:
     def draw_avg_genotype_diversity(self, history, name="avg_genotype_diversity"):
         populations = history.get_populations()
         diversity = []
+
         for i in range(len(populations)):
-            current_population = populations[i]
-            num_samples_to_test = len(current_population) * 0.2
-            similarities = []
-            for _ in range(int(num_samples_to_test)):
-                individuals = random.sample(current_population, 2)
-                individual1 = individuals[0]
-                individual2 = individuals[1]
+            data = np.array(populations[i])
+            data_squared = np.sum(data**2, axis=1)
+            dot_product = np.dot(data, data.T)
+            # distances = np.sqrt(data_squared[:, np.newaxis] - 2 * dot_product + data_squared)
+            distances_squared = data_squared[:,
+                                             np.newaxis] - 2 * dot_product + data_squared
+            # Ensure values are not less than 0
+            distances_squared = np.clip(distances_squared, 0, None)
+            distances = distances_squared
+            distances = np.sqrt(distances_squared)
 
-                similarities.append(
-                    self._cosine_similarity(individual1, individual2))
-
-            diversity.append(np.mean(similarities))
+            distances = np.triu(distances, k=1)
+            distances = distances.flatten()
+            distances = distances[distances != 0]
+            diversity.append(np.mean(distances))
 
         plt.plot(diversity)
         plt.title('Diversity')
