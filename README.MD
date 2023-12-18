@@ -29,7 +29,6 @@ To run on all benchmark functions, you can use:
 ```python
 benchmark_functions = get_all_functions()
 To run on a specific set of benchmark functions, you can get them by name, for example:
-```py
 benchmark_functions = get_functions_by_name(['f2', 'f5'])
 ```
 
