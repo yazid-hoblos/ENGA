@@ -53,7 +53,48 @@ python src/main.py --run enhanced
 python src/main.py --run enhanced ga
 ```
 
-## Typical usage example (from `src/main.py`)
+## Files and project layout
+
+Key files (located in `src/`):
+
+- `main.py` — example entry point and benchmark orchestration.
+- `genetic_algorithm.py` — base GA class and shared utilities.
+- `networked_genetic_algorithm.py`, `enhanced_networked_genetic_algorithm.py`, `networked_assignment.py` — networked GA variants and helpers.
+- `benchmark.py`, `benchmark_functions.py` — benchmarking harness and test functions.
+- `crossover.py`, `mutation.py`, `selection.py`, `networked_selection.py` — GA operators.
+- `utils/` — small utility modules (`math.py`, `drawable.py`).
+
+Output and logs:
+
+- `logs/metrics/` — saved metrics (fitness, diversity, selection pressure, ...)
+- `logs/results/` — benchmark run outputs and archived results
+
+## Metrics & logs
+
+This project can save a rich set of metrics and visualizations from each benchmark run. Metrics are written under `logs/metrics/` when enabled (see below). Keep in mind metrics (especially animated GIFs) can consume disk and I/O during long runs — enable them only when you need the outputs.
+
+### Key Components
+
+- `logs/metrics/fitness/` — PNG plots of average and best fitness over generations.
+- `logs/metrics/phenotype_diversity/` — PNG plots showing phenotype diversity over time.
+- `logs/metrics/genotype_diversity/` — PNG plots for genotype-space diversity.
+- `logs/metrics/selection_pressure/` — PNG plots tracking selection pressure each generation.
+- `logs/metrics/degree/`, `logs/metrics/degree_exponent/`, `logs/metrics/clustering_coefficient/`, `logs/metrics/path_length/` — network-related PNG visualizations.
+- `logs/metrics/number_of_nodes_to_remove/` — PNG plots for node-removal statistics.
+- `logs/metrics/animated_networks/` — optional animated network visualizations saved as GIF files.
+
+### How to enable saving
+
+- From the command line: pass `--save-metrics` to `src/main.py` to enable metric saving for benchmark runs (this toggles the `save_metrics` flag when `Benchmark` objects are created).
+- Programmatically: set `save_metrics=True` when constructing a `Benchmark(...)` or call `DrawManager.draw_animated_network(history, save=True)` to save an animation explicitly.
+
+### Network Animation
+
+As highlighted below, in the network architecture, high‑fitness individuals migrate from the periphery to the center as evolution creates hubs — node color shows fitness and centrality reflects accumulated connections. This highlights selection pressure, hub formation, and convergence.
+
+![Animated network example](logs/metrics/animated_networks/animated_network_25_22_11.gif)
+
+## Typical usage example
 
 ```py
 from benchmark import Benchmark
@@ -76,24 +117,6 @@ enhanced_nga_benchmark = Benchmark(
 
 enhanced_nga_benchmark.run()
 ```
-
-## Files and project layout
-
-Key files (located in `src/`):
-
-- `main.py` — example entry point and benchmark orchestration.
-- `genetic_algorithm.py` — base GA class and shared utilities.
-- `networked_genetic_algorithm.py`, `enhanced_networked_genetic_algorithm.py`, `networked_assignment.py` — networked GA variants and helpers.
-- `benchmark.py`, `benchmark_functions.py` — benchmarking harness and test functions.
-- `crossover.py`, `mutation.py`, `selection.py`, `networked_selection.py` — GA operators.
-- `utils/` — small utility modules (`math.py`, `drawable.py`).
-
-Output and logs:
-
-- `logs/metrics/` — saved metrics (fitness, diversity, selection pressure, ...)
-- `logs/results/` — benchmark run outputs and archived results
-
-Images used in the README / examples are in the top-level `Images/` folder.
 
 ## Requirements
 

@@ -323,7 +323,7 @@ class DrawManager:
                  verticalalignment='bottom', transform=ax.transAxes, fontsize=8)
         plt.show()
 
-    def draw_animated_network(self, history):
+    def draw_animated_network(self, history, plt_show=True, save=True, name="animated_network", fps=10):
         networks = history.get_networks()
 
         fig = plt.figure(figsize=(16, 12))
@@ -386,9 +386,25 @@ class DrawManager:
         ani = animation.FuncAnimation(fig, update, frames=num_frames,
                                       interval=100, repeat=True)
 
-        plt.show()
-        # ani.save('dynamic_images.gif', writer='pillow',
-        #          fps=40, dpi=100, bitrate=1000)
+        # Save animation (optional) and/or show
+        if save:
+            # ensure directory exists and build filename
+            current_time = time.strftime("%d_%H_%M")
+            filename = f"./logs/metrics/animated_networks/{name}_{current_time}.gif"
+            self._ensure_dir_for_file(filename)
+            try:
+                ani.save(filename, writer='pillow', fps=fps)
+                print(f"Saved animated network to {filename}")
+            except Exception as e:
+                # fallback to ffmpeg if pillow is not available
+                try:
+                    ani.save(filename, writer='ffmpeg', fps=fps)
+                    print(f"Saved animated network to {filename} using ffmpeg")
+                except Exception as e2:
+                    print(f"Failed to save animation (pillow/ffmpeg): {e}; {e2}")
+
+        if plt_show:
+            plt.show()
 
     def temprature_of_node(self, G: nx.Graph, node):
         """
