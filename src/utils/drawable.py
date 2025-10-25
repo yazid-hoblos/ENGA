@@ -15,6 +15,12 @@ class DrawManager:
     def __init__(self, is_maximization):
         self.is_maximization = is_maximization
 
+    def _ensure_dir_for_file(self, filename):
+        """Create parent directories for filename if they don't exist."""
+        dirpath = os.path.dirname(filename)
+        if dirpath and not os.path.exists(dirpath):
+            os.makedirs(dirpath, exist_ok=True)
+
     def _cosine_similarity(self, a, b):
         dot_product = np.dot(a, b)
         norm_a = np.linalg.norm(a)
@@ -44,6 +50,7 @@ class DrawManager:
 
         current_time = time.strftime("%d_%H_%M")
         filename = f"./logs/metrics/selection_pressure/{name}_{current_time}.png"
+        self._ensure_dir_for_file(filename)
         plt.savefig(filename)
         plt.close()
 
@@ -73,6 +80,7 @@ class DrawManager:
 
         current_time = time.strftime("%d_%H_%M")
         filename = f"./logs/metrics/phenotype_diversity/{name}_{current_time}.png"
+        self._ensure_dir_for_file(filename)
         plt.savefig(filename)
         plt.close()
 
@@ -104,6 +112,7 @@ class DrawManager:
 
         current_time = time.strftime("%d_%H_%M")
         filename = f"./logs/metrics/genotype_diversity/{name}_{current_time}.png"
+        self._ensure_dir_for_file(filename)
         plt.savefig(filename)
         plt.close()
 
@@ -131,6 +140,7 @@ class DrawManager:
         fig.tight_layout()
         current_time = time.strftime("%d_%H_%M")
         filename = f"./logs/metrics/fitness/{name}_{current_time}.png"
+        self._ensure_dir_for_file(filename)
         plt.savefig(filename)
         plt.close()
 
@@ -147,6 +157,7 @@ class DrawManager:
 
         current_time = time.strftime("%d_%H_%M")
         filename = f"./logs/metrics/number_of_nodes_to_remove/{name}_{current_time}.png"
+        self._ensure_dir_for_file(filename)
         plt.savefig(filename)
         plt.close()
 
@@ -172,6 +183,7 @@ class DrawManager:
 
         current_time = time.strftime("%d_%H_%M")
         filename = f"./logs/metrics/degree_exponent/{name}_{current_time}.png"
+        self._ensure_dir_for_file(filename)
         plt.savefig(filename)
         plt.close()
 
@@ -201,6 +213,7 @@ class DrawManager:
 
         current_time = time.strftime("%d_%H_%M")
         filename = f"./logs/metrics/clustering_coefficient/{name}_{current_time}.png"
+        self._ensure_dir_for_file(filename)
         plt.savefig(filename)
         plt.close()
 
@@ -231,6 +244,7 @@ class DrawManager:
 
         current_time = time.strftime("%d_%H_%M")
         filename = f"./logs/metrics/path_length/{name}_{current_time}.png"
+        self._ensure_dir_for_file(filename)
         plt.savefig(filename)
         plt.close()
 
@@ -252,6 +266,7 @@ class DrawManager:
 
         current_time = time.strftime("%d_%H_%M")
         filename = f"./logs/metrics/degree/{name}_{current_time}.png"
+        self._ensure_dir_for_file(filename)
         plt.savefig(filename)
         plt.close()
 

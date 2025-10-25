@@ -9,6 +9,7 @@ from benchmark import Benchmark, GABenchmarkFunction, FunctionCharacteristic
 from benchmark_functions import get_functions_by_name, get_functions_with_characteristics, get_all_functions
 import sys
 import math
+import argparse
 from CRGA import CRGA
 from DCGA import DCGA
 import matplotlib.pyplot as plt
@@ -48,6 +49,38 @@ def main():
     # crga_benchmark.run()
     # dcga_benchmark.run()
 
+    # Simple CLI: allow selecting which benchmark(s) to run.
+    parser = argparse.ArgumentParser(description='Run GA benchmarks')
+    parser.add_argument('--run', nargs='+', choices=['enhanced', 'networked', 'ga', 'crga', 'dcga', 'all'],
+                        help='Which benchmark(s) to run')
+    args = parser.parse_args()
+
+    if not args.run:
+        print('No benchmarks requested.')
+        print('Use --run with one or more of: enhanced, networked, ga, crga, dcga, all')
+        print('Example: python3 main.py --run ga')
+        return
+
+    to_run = set(args.run)
+    if 'all' in to_run:
+        to_run = {'enhanced', 'networked', 'ga', 'crga', 'dcga'}
+
+    mapping = {
+        'enhanced': enhanced_nga_benchmark,
+        'networked': nga_benchmark,
+        'ga': ga_benchmark,
+        'crga': crga_benchmark,
+        'dcga': dcga_benchmark,
+    }
+
+    for name in to_run:
+        bench = mapping.get(name)
+        if bench is None:
+            print(f"Unknown benchmark: {name}")
+            continue
+        print(f"Running {name} benchmark...")
+        bench.run()
+        print(f"Finished {name} benchmark")
 
 if __name__ == '__main__':
     main()
