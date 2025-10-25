@@ -1,78 +1,103 @@
 
-# A Scale-free Networked Genetic Algorithm with Balanced Exploration and Exploitation
+## ENGA — Enhanced Networked Genetic Algorithm
 
-In our proposed approach, we use a metric that combines phenotypic and genotypic similarities to establish inter-chromosomal links. We define phenotypic and genotypic similarities between two chromosomes as the differences in their fitness values and gene content, respectively. The created inter-chromosomal links form a scale-free topology that drives the evolutionary process in a way that maintains a balance of exploration and exploitation.
+A Python implementation of networked genetic algorithms that use genotypic and phenotypic similarity to form scale-free inter-chromosomal links, helping balance exploration and exploitation during evolution.
 
-## Installation
+This repository contains several GA variants (including ENGA, NGA, GA, CRGA, DCGA) and a small benchmarking harness to compare them on common test functions.
 
-To install the code, first clone the repository
+## Quick start
 
-```bash
-  git clone https://github.com/Murf-y/Enhanced-Networked-Genetic-Algorithm
-```
-
-Then install necessary packages to run the code
+1. Clone the repository:
 
 ```bash
-  pip install -r requirements.txt
+git clone https://github.com/yazid-hoblos/ENGA.git
+cd ENGA
 ```
 
-## Usage
+2. Install requirements:
 
-All GA algorithms implemented inherit from the parent GA class. To run a specific genetic algorithm, you only need to use the `main.py` file. Therefore, there is no need to open any other file for configuration. To view the code of each variation created for the genetic algorithm, open the corresponding file with the name of the variation.
+```bash
+pip install -r requirements.txt
+```
 
-### Benchmark Functions
+3. Run the main benchmark script:
 
-In `main.py`, first, we get the benchmark functions to use.
-To run on all benchmark functions, you can use:
+```bash
+python src/main.py --run all
+```
 
-```python
+Command-line options
+
+- `--run` — select which benchmark(s) to execute. Accepts one or more of the following values: `enhanced`, `networked`, `ga`, `crga`, `dcga`, or `all`.
+
+Examples:
+
+```bash
+# run all benchmarks
+python src/main.py --run all
+
+# run only the enhanced networked GA
+python src/main.py --run enhanced
+
+# run multiple specified benchmarks (enhanced and plain ga)
+python src/main.py --run enhanced ga
+```
+
+## Typical usage example (from `src/main.py`)
+
+```py
+from benchmark import Benchmark
+from benchmark_functions import get_all_functions
+from enhanced_networked_genetic_algorithm import EnhancedNetworkGeneticAlgorithm
+
 benchmark_functions = get_all_functions()
-```
-To run on a specific set of benchmark functions, you can get them by name, for example:
-```py
-benchmark_functions = get_functions_by_name(['f2', 'f5'])
-```
+enhanced_nga_benchmark = Benchmark(
+    genetic_algorithm=EnhancedNetworkGeneticAlgorithm,
+    number_of_runs=1,
+    benchmark_functions=benchmark_functions,
+    number_of_generations=2000,
+    population_size=125,
+    number_elites=0,
+    probability_crossover=0.95,
+    probability_mutation=0.1,
+    verbose=True,
+    save_metrics=True,
+)
 
-### Benchmark & GA variations
-
-1. In `main.py`, after specifying the benchmark functions to use, we create an instance of a `Benchmark` given a genetic algorithm class.
-For example:
-
-```py
-benchmark_functions = get_all_functions()
-
-# Enhanced Networked Genetic Algorithm
-enhanced_nga_benchmark = Benchmark(genetic_algorithm=EnhancedNetworkGeneticAlgorithm, number_of_runs=1, benchmark_functions=benchmark_functions, number_of_generations=2000, population_size=125, number_elites=0, probability_crossover=0.95, probability_mutation=0.1, verbose=True, save_metrics=True)
-```
-
-The above code, would create a Benchmark instance, with the ENGA as a genetic algorithm variation, this algorithm will run on the benchmark functions already defined  `number_of_runs` times. The ENGA will run with 125 as the number of individuals in the population, 2000 as the maximum generations, 95% probability of crossover and 10% probability of mutation. `Verbose=True`, means that the results logs will be displayed in the console with a progress bar, the `save_metrics=True` will save the metrics of the benchmark for each run.
-
-2. To run the benchmark instance already created, you simply run
-
-```py
 enhanced_nga_benchmark.run()
 ```
 
-3. Currently all GA variation have a benchmark instance, hence to run them uncomment one or more of the below lines:
+## Files and project layout
 
-```py
-# enhanced_nga_benchmark.run()
-# nga_benchmark.run()
-# ga_benchmark.run()
-# crga_benchmark.run()
-# dcga_benchmark.run()
-```
+Key files (located in `src/`):
 
-## Images
+- `main.py` — example entry point and benchmark orchestration.
+- `genetic_algorithm.py` — base GA class and shared utilities.
+- `networked_genetic_algorithm.py`, `enhanced_networked_genetic_algorithm.py`, `networked_assignment.py` — networked GA variants and helpers.
+- `benchmark.py`, `benchmark_functions.py` — benchmarking harness and test functions.
+- `crossover.py`, `mutation.py`, `selection.py`, `networked_selection.py` — GA operators.
+- `utils/` — small utility modules (`math.py`, `drawable.py`).
 
-### Degree distribution of the network
+Output and logs:
 
-![Degree](./Images/Degree_distribution.png)
+- `logs/metrics/` — saved metrics (fitness, diversity, selection pressure, ...)
+- `logs/results/` — benchmark run outputs and archived results
 
-### Example Network with 10 nodes, to illustrate the assignment of individuals
+Images used in the README / examples are in the top-level `Images/` folder.
 
-![Assignment](./Images/Assignment.png)
+## Requirements
+
+See `requirements.txt` for Python package dependencies. The project expects Python 3.8+ (recommend 3.10+).
+
+## Contributing
+
+Contributions are welcome. If you'd like to contribute:
+
+1. Fork the repo and create a feature branch.
+2. Add tests or examples for new behaviour when applicable.
+3. Open a pull request describing your change.
+
+If you plan to work on an issue, comment on it to avoid duplicated effort.
 
 ## Authors
 
@@ -84,14 +109,3 @@ enhanced_nga_benchmark.run()
 - [Numpy](https://numpy.org/)
 - [Networkx](https://networkx.org/)
 - [Pyvis](https://github.com/WestHealth/pyvis)
-
-## Contributing
-
-Contributions are always welcome!
-
-Once you've found an issue you'd like to work on, please follow these steps to make your contribution:
-
-Comment on it and say you're working on that issue. This is to avoid conflicts with others also working on the issue. If you've followed the guidelines above, you don't need to ask permission to start work on an issue.
-Write your code and submit your pull request.
-
-Wait for code review and address any issues raised as soon as you can.
