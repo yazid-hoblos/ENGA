@@ -30,6 +30,16 @@ Command-line options
 
 - `--run` — select which benchmark(s) to execute. Accepts one or more of the following values: `enhanced`, `networked`, `ga`, `crga`, `dcga`, or `all`.
 
+- `--save-metrics` — optional flag. When present, the benchmarks will save metrics (fitness, diversity, selection pressure, etc.) into `logs/metrics/`. This flag is off by default.
+
+- `--generations N` — set the number of generations (overrides per-benchmark default). Default (if omitted): 2000.
+- `--population-size N` — set the population size for all benchmarks. Default (if omitted): 125 (124 for CRGA in original config).
+- `--number-elites N` — number of elites to keep. Default (per-benchmark): 0 for most algorithms, 10 for the plain GA.
+- `--crossover-prob P` — crossover probability (0.0–1.0). Default: 0.95.
+- `--mutation-prob P` — mutation probability (0.0–1.0). Default: 0.10.
+- `--nruns N` — number of independent runs to perform. Default: 1.
+- `--no-verbose` — disable verbose output. Default: verbose on.
+
 Examples:
 
 ```bash
