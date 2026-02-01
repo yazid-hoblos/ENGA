@@ -94,9 +94,7 @@ This project can save a rich set of metrics and visualizations from each benchma
 
 ### Network Animation
 
-As highlighted below, in the network architecture, high‑fitness individuals migrate from the periphery to the center as evolution creates hubs — node color shows fitness and centrality reflects accumulated connections. This highlights selection pressure, hub formation, and convergence.
-
-![Animated network example](logs/metrics/animated_networks/animated_network_25_22_11.gif)
+As highlighted in the animation above, in the network architecture, high‑fitness individuals migrate from the periphery to the center as evolution creates hubs — node color shows fitness and centrality reflects accumulated connections. This highlights selection pressure, hub formation, and convergence.
 
 ## Typical usage example
 
