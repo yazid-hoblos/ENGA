@@ -1,5 +1,7 @@
 
 ## ENGA — Enhanced Networked Genetic Algorithm
+[![Python](https://img.shields.io/badge/Python-3.8+-blue)](https://www.python.org/)
+[![ENGRXiv Preprint](https://img.shields.io/badge/Preprint-ENGRXiv-orange?logo=Open%20Access&logoColor=white)](https://engrxiv.org/preprint/view/5690)
 
 A Python implementation of networked genetic algorithms that use genotypic and phenotypic similarity to form scale-free inter-chromosomal links, helping balance exploration and exploitation during evolution.
 
