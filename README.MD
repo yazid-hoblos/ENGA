@@ -3,6 +3,10 @@
 
 A Python implementation of networked genetic algorithms that use genotypic and phenotypic similarity to form scale-free inter-chromosomal links, helping balance exploration and exploitation during evolution.
 
+![Animated Network](logs/metrics/animated_networks/animated_network_25_22_11.gif)
+
+*Animated evolution of node rankings across generations. Node colors indicate fitness ranking: green (top 2), teal (next 10), blue-green (next 15), and dark blue (others). Labels show node scores.*
+
 This repository contains several GA variants (including ENGA, NGA, GA, CRGA, DCGA) and a small benchmarking harness to compare them on common test functions.
 
 ## Quick start
